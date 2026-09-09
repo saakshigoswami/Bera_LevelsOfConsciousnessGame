@@ -43,6 +43,7 @@ var TOOLS = {
   observe:   { emo:'👀', label:'Look closely',         say:null },
   call:      { emo:'🗣️', label:'"Bera?"',               say:'Bera?' },
   clap:      { emo:'👏', label:'"Clap your hands"',      say:'Bera, clap your hands.' },
+  wave:      { emo:'🤚', label:'"Wave hello"',           say:'Bera, wave hello.' },
   raisehand: { emo:'✋', label:'"Raise your right hand"',say:'Bera, raise your right hand.' },
   touchnose: { emo:'👃', label:'"Touch your nose"',      say:'Bera, touch your nose.' },
   name:      { emo:'🐻', label:'"What is your name?"',   say:'What is your name?' },
@@ -82,7 +83,7 @@ var STATES = {
   lethargic: {
     name:'Lethargic', emoji:'😪', idle:'lethargic2', lying:false, zone:'lethargic',
     blurb:'Keeps nodding off — but a voice brings her back.',
-    explain:'Bera is drowsy. Her brain is a little less awake than normal, so she keeps sliding toward sleep. A voice still wakes her up all the way, and her answers are right — just slow.',
+    explain:'Bera is drowsy. Her brain is a little less awake than normal, so she keeps sliding toward sleep. A voice still wakes her up all the way, and her answers are right but slow.',
     tests:[
       { tool:'observe', pose:'lethargic2', react:'react-settle', q:'Her eyes are…',
         opts:[['half-closed, keeps drifting off',1],['wide open',0],['shut tight',0]] },
@@ -100,7 +101,7 @@ var STATES = {
   confused: {
     name:'Confused', emoji:'😵‍💫', idle:'confused', lying:false, zone:'confused',
     blurb:'Awake and moving — but nothing quite makes sense.',
-    explain:'Bera is confused. She is awake and moving, but her brain is not putting things together. She feels a pinch and pulls away, and she can look at things, but she mixes up what you ask and does not know where she is. Being awake and being aware are not the same thing.',
+    explain:'Bera is confused. She is awake and moving, but her brain is not working properly, so she cannot put things together. Her reflexes still work — she feels a pinch and pulls away. She can look at things, but may not make sense of them, and she does not answer properly when asked where she is. Being awake and being aware are not the same thing.',
     tests:[
       { tool:'observe', pose:'confused', react:'react-flicker', q:'Her eyes are…',
         opts:[['open, but she looks lost',1],['open, calm and focused',0],['closed',0]] },
@@ -124,7 +125,7 @@ var STATES = {
   comatose: {
     name:'Comatose', emoji:'😶', idle:'comatose', lying:true, zone:'coma',
     blurb:'Cannot be woken — by anything.',
-    explain:'Bera is in a coma. Her brain cannot be woken. Her eyes stay shut and nothing — not a loud sound, not even a pinch — makes her respond. Her body still breathes on its own.',
+    explain:'Bera is in a coma. She cannot be woken from this state and does not respond to anything — not a loud sound, not even a pinch. Her brain is only partly working. Her eyes stay shut, but she is still breathing and her heart is still beating.',
     tests:[
       { tool:'observe', pose:'comatose', react:'react-settle', q:'Her eyes are…',
         opts:[['shut, and she is completely still',1],['shut but she keeps stirring',0],['open',0]] },
@@ -142,7 +143,7 @@ var STATES = {
   anesthesia: {
     name:'Under Anaesthesia', emoji:'💉', idle:'anesthesia', lying:true, zone:'anesthesia',
     blurb:'Fast asleep on purpose — so the doctors can help.',
-    explain:'Bera is under anaesthesia. Doctors have used medicine to switch her brain’s wake-up system off on purpose, so they can help her without her feeling anything. Even a doctor’s touch gets no response, and she will not remember it. When the medicine wears off, she wakes up.',
+    explain:'Bera is under anaesthesia. Doctors have used medicine to switch her brain’s wake-up system off on purpose, so they can operate on her without causing her pain. Even a doctor’s touch gets no response, and she will not remember any of it. When the medicine wears off, she wakes up.',
     tests:[
       { tool:'observe', pose:'anesthesia', react:'react-settle', q:'In the operating room, Bera is…',
         opts:[['eyes closed, completely still',1],['sleeping lightly',0],['awake and talking',0]] },
@@ -158,7 +159,7 @@ var STATES = {
   lightsleep: {
     name:'Light Sleep', emoji:'😌', idle:'light_sleep', lying:true, zone:'lightsleep',
     blurb:'Dozing — the smallest nudge wakes her.',
-    explain:'Bera is in light sleep. Her muscles have relaxed and she has drifted off, but only just — a soft voice or a gentle touch brings her straight back, and she is clear-headed the moment she wakes.',
+    explain:'Bera is in light sleep — where the brain gets ready to change gear. Her muscles have relaxed and she has drifted off, but only just: a soft voice or a gentle touch brings her straight back, and she is clear-headed the moment she wakes.',
     tests:[
       { tool:'observe', pose:'light_sleep', react:'react-settle', q:'She is…',
         opts:[['eyes closed, resting calmly',1],['eyes open',0],['tossing and turning',0]] },
@@ -176,7 +177,7 @@ var STATES = {
   deepsleep: {
     name:'Deep Sleep', emoji:'😴', idle:'sleeping', lying:true, zone:'deepsleep',
     blurb:'Way down deep — hard to wake, groggy when she does.',
-    explain:'Bera is in deep sleep. Her brain is making slow, big waves. This is the sleep it is hardest to wake someone from — it takes a loud sound or a firm touch, and even then she is groggy and slow for a while.',
+    explain:'Bera is in deep sleep — the brain slows right down and the whole body goes into repair mode. This is the sleep it is hardest to wake someone from: it takes a loud sound or a firm touch, and even then she is groggy and slow for a while.',
     tests:[
       { tool:'observe', pose:'sleeping', react:'react-settle', q:'She is…',
         opts:[['eyes closed, very still, deep asleep',1],['lightly dozing',0],['awake',0]] },
@@ -230,14 +231,14 @@ var STATES = {
   meditation: {
     name:'Meditation', emoji:'🧘', idle:'meditation', lying:false, zone:'meditation',
     blurb:'Eyes closed, perfectly calm — and wide awake inside.',
-    explain:'Bera is meditating. Her eyes are closed and her body is still, but she is not asleep at all. Her mind is calm and very focused, and she can answer you at any moment, then settle back into stillness. It is a trained way of being quietly, deeply awake.',
+    explain:'Bera is meditating. Her eyes are closed and her body is still and relaxed, but she is not asleep. Her mind is calm yet alert, and she can choose to answer you, then settle back into stillness. It is a trained practice that gradually reshapes the brain to hold a calm, relaxed kind of awareness.',
     tests:[
       { tool:'observe', pose:'meditation', react:'react-settle', q:'She is…',
         opts:[['eyes closed, calm and still — but not asleep',1],['fast asleep',0],['fidgety',0]] },
       { tool:'call', pose:'meditation', say:'Yes, I’m here.', react:'react-perk', q:'When you call her, she…',
-        opts:[['answers calmly, right away',1],['does not hear you',0],['jumps, startled',0]] },
-      { tool:'clap', pose:'clap', say:'Okay.', react:'react-perk', q:'Asked to clap, she…',
-        opts:[['claps calmly, then settles back',1],['ignores it',0],['claps wildly',0]] },
+        opts:[['calmly says she is here, and nods',1],['does not hear you',0],['jumps, startled',0]] },
+      { tool:'wave', pose:'wave_hello', say:'Okay.', react:'react-perk', q:'Asked to wave hello, she…',
+        opts:[['waves gently, then settles back',1],['ignores it',0],['waves wildly',0]] },
       { tool:'raisehand', pose:'raise_right_hand', say:'Sure.', react:'react-perk', q:'Asked to raise her right hand, she…',
         opts:[['raises the right hand calmly',1],['raises the wrong hand',0],['does not move',0]] },
       { tool:'name', pose:'meditation', say:'I’m Bera.', react:'react-perk', q:'Asked her name, she…',
@@ -487,7 +488,7 @@ function runTest(i){
   setTimeout(function(){
     setPose(t.pose);
     reactOnce(t.react||'react-perk', 900);
-    if(t.say) setTimeout(function(){ beraSay(t.say); }, t.tool==='call'||t.tool==='name'||t.tool==='place'||t.tool==='lucidq'||t.tool==='clap'||t.tool==='raisehand'||t.tool==='touchnose' ? 550 : 250);
+    if(t.say) setTimeout(function(){ beraSay(t.say); }, t.tool==='call'||t.tool==='name'||t.tool==='place'||t.tool==='lucidq'||t.tool==='clap'||t.tool==='wave'||t.tool==='raisehand'||t.tool==='touchnose' ? 550 : 250);
     // after the beat, offer the log options
     setTimeout(function(){
       _busy=false;

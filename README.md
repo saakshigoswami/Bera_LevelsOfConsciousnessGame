@@ -153,12 +153,12 @@ simplified 3-choice versions of the observation rows.
 | | ✋ "Bera, raise your right hand." | Immediately raises right hand correctly | "Sure!" | |
 | | 🐻 "What is your name?" | Answers confidently | "I'm Bera." | |
 | | 📍 "Where are you?" | Answers correctly | "I am at NIMHANS Museum." | |
-| **Lethargic** | 👀 Observe eyes | Eyes partly open / half-closed; drifts toward sleep | — | Bera is drowsy. Her brain is a little less awake than normal, so she keeps sliding toward sleep. A voice still wakes her up all the way, and her answers are right — just slow. |
+| **Lethargic** | 👀 Observe eyes | Eyes partly open / half-closed; drifts toward sleep | — | Bera is drowsy. Her brain is a little less awake than normal, so she keeps sliding toward sleep. A voice still wakes her up all the way, and her answers are right but slow. |
 | | 🗣️ "Bera?" | Slowly opens eyes and looks toward examiner | "Mmm… yeah? I'm Bera… I'm up…" | |
 | | 👏 Clap | Claps slowly after waking | "Okay…" | |
 | | 🐻 Name | Answers correctly but slowly | "I'm… Bera…" | |
 | | 📍 Place | Answers correctly but drowsily | "NIMHANS Museum…" | |
-| **Confused** | 👀 Observe eyes | Eyes open; looks around but appears disoriented | — | Bera is confused. She is awake and moving, but her brain is not putting things together. She feels a pinch and pulls away, and she can look at things, but she mixes up what you ask and does not know where she is. Being awake and being aware are not the same thing. |
+| **Confused** | 👀 Observe eyes | Eyes open; looks around but appears disoriented | — | Bera is confused. She is awake and moving, but her brain is not working properly, so she cannot put things together. Her reflexes still work — she feels a pinch and pulls away. She can look at things, but may not make sense of them, and she does not answer properly when asked where she is. Being awake and being aware are not the same thing. |
 | | 🗣️ "Bera?" | Looks toward examiner but seems uncertain | "Huh?… yes?" | |
 | | 🚨 Alarm | Startles and looks around, but appears confused rather than becoming fully oriented | "What…?" | |
 | | 🤏 Pinch | Purposefully pulls the stimulated hand / limb away; may look toward the stimulated area | "Ow!" | |
@@ -166,24 +166,24 @@ simplified 3-choice versions of the observation rows.
 | | ✋ Right hand | Hesitates or raises wrong hand | "This one?" | |
 | | 🐻 Name | Gives confused answer | "Bera… I think?" | |
 | | 📍 Place | Gives incorrect location | "At home?" | |
-| **Comatose** | 👀 Observe eyes | Eyes remain closed; no purposeful spontaneous movement | — | Bera is in a coma. Her brain cannot be woken. Her eyes stay shut and nothing — not a loud sound, not even a pinch — makes her respond. Her body still breathes on its own. |
+| **Comatose** | 👀 Observe eyes | Eyes remain closed; no purposeful spontaneous movement | — | Bera is in a coma. She cannot be woken from this state and does not respond to anything — not a loud sound, not even a pinch. Her brain is only partly working. Her eyes stay shut, but she is still breathing and her heart is still beating. |
 | | 🗣️ "Bera?" | No response | — | |
 | | 🚨 Alarm | No meaningful response; may show no movement or only a brief nonspecific startle depending on the intended depth of coma | — | |
 | | 🤏 Pinch | No purposeful response. For our Bera rule, she remains unresponsive rather than reaching toward or understanding the stimulus | — | |
 | | 👏 Clap | No response | — | |
 | | ✋ Right hand | No purposeful movement | — | |
-| **Under Anaesthesia** | 👀 Observe eyes | Eyes closed; completely still / unresponsive; operating-room context visible | — | Bera is under anaesthesia. Doctors have used medicine to switch her brain's wake-up system off on purpose, so they can help her without her feeling anything. Even a doctor's touch gets no response, and she will not remember it. When the medicine wears off, she wakes up. |
+| **Under Anaesthesia** | 👀 Observe eyes | Eyes closed; completely still / unresponsive; operating-room context visible | — | Bera is under anaesthesia. Doctors have used medicine to switch her brain's wake-up system off on purpose, so they can operate on her without causing her pain. Even a doctor's touch gets no response, and she will not remember any of it. When the medicine wears off, she wakes up. |
 | | 🗣️ "Bera?" | No response | — | |
 | | 🚨 Alarm | No response; remains unconscious during the procedure | — | |
 | | 🤏 Pinch | No movement / no meaningful response to the simulated physical stimulus | — | |
 | | 👏 Clap | No response | — | |
 | | ✋ Right hand | No response | — | |
-| **Light Sleep** | 👀 Observe eyes | Eyes closed; relaxed sleeping posture | — | Bera is in light sleep. Her muscles have relaxed and she has drifted off, but only just — a soft voice or a gentle touch brings her straight back, and she is clear-headed the moment she wakes. |
+| **Light Sleep** | 👀 Observe eyes | Eyes closed; relaxed sleeping posture | — | Bera is in light sleep — where the brain gets ready to change gear. Her muscles have relaxed and she has drifted off, but only just: a soft voice or a gentle touch brings her straight back, and she is clear-headed the moment she wakes. |
 | | 🗣️ "Bera?" | Wakes easily and looks toward examiner | "Mm… oh, hello!" | |
 | | 👏 Clap | Claps correctly after waking | "Okay!" | |
 | | 👃 Touch your nose | Touches the nose after waking | "Sure!" | |
 | | 🐻 Name | Answers correctly | "I'm Bera." | |
-| **Deep Sleep** | 👀 Observe eyes | Eyes closed; very still; deeply asleep | — | Bera is in deep sleep. Her brain is making slow, big waves. This is the sleep it is hardest to wake someone from — it takes a loud sound or a firm touch, and even then she is groggy and slow for a while. |
+| **Deep Sleep** | 👀 Observe eyes | Eyes closed; very still; deeply asleep | — | Bera is in deep sleep — the brain slows right down and the whole body goes into repair mode. This is the sleep it is hardest to wake someone from: it takes a loud sound or a firm touch, and even then she is groggy and slow for a while. |
 | | 🗣️ "Bera?" | Little / no response; remains asleep | — | |
 | | 🚨 Alarm | Stirs and eventually wakes groggily | "Ugh… what? Oh… I'm Bera. That really woke me." | |
 | | 🤏 Pinch | Stronger stimulus eventually wakes her; initially reacts slowly | "Ugh… what?" | |
@@ -201,9 +201,9 @@ simplified 3-choice versions of the observation rows.
 | | 🤏 Pinch | Little / no purposeful response; dream continues | — | |
 | | 🧠 "Do you know you're dreaming?" | Recognizes that she is dreaming | "Yes! I know I'm dreaming!" | |
 | | 📍 Place | Gives dream-world answer | "I'm dreaming that I'm driving a car!" | |
-| **Meditation** | 👀 Observe eyes | Eyes closed / soft gaze; calm and still | — | Bera is meditating. Her eyes are closed and her body is still, but she is not asleep at all. Her mind is calm and very focused, and she can answer you at any moment, then settle back into stillness. It is a trained way of being quietly, deeply awake. |
-| | 🗣️ "Bera?" | Calmly acknowledges examiner in a relaxed way | "Yes, I'm here." | |
-| | 👏 Clap | Deliberately claps, then returns to calm posture | "Okay." | |
+| **Meditation** | 👀 Observe eyes | Eyes closed / soft gaze; calm and still | — | Bera is meditating. Her eyes are closed and her body is still and relaxed, but she is not asleep. Her mind is calm yet alert, and she can choose to answer you, then settle back into stillness. It is a trained practice that gradually reshapes the brain to hold a calm, relaxed kind of awareness. |
+| | 🗣️ "Bera?" | Calmly acknowledges examiner and nods / blinks in response | "Yes, I'm here." | |
+| | 🤚 Hand wave | Waves gently, then returns to calm posture | "Okay." | |
 | | ✋ Right hand | Deliberately raises right hand, then returns to calm posture | "Sure." | |
 | | 🐻 Name | Answers calmly | "I'm Bera." | |
 | | 📍 Place | Answers correctly | "I am at NIMHANS Museum." | |

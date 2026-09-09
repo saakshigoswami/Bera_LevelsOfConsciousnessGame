@@ -6,3 +6,6 @@ desktop.ini
 
 # local dev server output
 /tmp/
+
+# Office lock files
+~$*
