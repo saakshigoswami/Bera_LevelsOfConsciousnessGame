@@ -201,7 +201,7 @@ simplified 3-choice versions of the observation rows.
 | | 🤏 Pinch | Little / no purposeful response; dream continues | — | |
 | | 🧠 "Do you know you're dreaming?" | Recognizes that she is dreaming | "Yes! I know I'm dreaming!" | |
 | | 📍 Place | Gives dream-world answer | "I'm dreaming that I'm driving a car!" | |
-| **Meditation** | 👀 Observe eyes | Eyes closed / soft gaze; calm and still | — | Bera is meditating. Her eyes are closed and her body is still and relaxed, but she is not asleep. Her mind is calm yet alert, and she can choose to answer you, then settle back into stillness. It is a trained practice that gradually reshapes the brain to hold a calm, relaxed kind of awareness. |
+| **Meditation** | 👀 Observe eyes | Eyes closed / soft gaze; calm and still | — | Bera is meditating. Her eyes are closed and her body is still and relaxed, but she is not asleep. Her mind is calm yet alert, and she can choose to answer you, then settle back into quietude. It is a trained practice that gradually reshapes the brain to hold a calm, relaxed kind of awareness. |
 | | 🗣️ "Bera?" | Calmly acknowledges examiner and nods / blinks in response | "Yes, I'm here." | |
 | | 🤚 Hand wave | Waves gently, then returns to calm posture | "Okay." | |
 | | ✋ Right hand | Deliberately raises right hand, then returns to calm posture | "Sure." | |

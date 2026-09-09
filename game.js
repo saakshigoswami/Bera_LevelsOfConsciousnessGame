@@ -231,7 +231,7 @@ var STATES = {
   meditation: {
     name:'Meditation', emoji:'🧘', idle:'meditation', lying:false, zone:'meditation',
     blurb:'Eyes closed, perfectly calm — and wide awake inside.',
-    explain:'Bera is meditating. Her eyes are closed and her body is still and relaxed, but she is not asleep. Her mind is calm yet alert, and she can choose to answer you, then settle back into stillness. It is a trained practice that gradually reshapes the brain to hold a calm, relaxed kind of awareness.',
+    explain:'Bera is meditating. Her eyes are closed and her body is still and relaxed, but she is not asleep. Her mind is calm yet alert, and she can choose to answer you, then settle back into quietude. It is a trained practice that gradually reshapes the brain to hold a calm, relaxed kind of awareness.',
     tests:[
       { tool:'observe', pose:'meditation', react:'react-settle', q:'She is…',
         opts:[['eyes closed, calm and still — but not asleep',1],['fast asleep',0],['fidgety',0]] },
