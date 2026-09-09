@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Help Bera! — Doctor Detective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141f27; --cream:#f7efdf; --cream-dim:#b9c2c2;
+  --amber:#f2a94d; --amber-deep:#d4842a; --amber-glow:#ffcf8c;
+  --sage:#8ac4a8; --sage-ink:#2f7a56; --coral:#ea6b4d; --coral-deep:#c94f34;
+  --paper:#fbf1da; --paper-2:#f6e2b6; --card:#fffbf1; --card-line:#e8d4a4;
+  --text:#3a2a18; --text-dim:#8a7256; --frame:#6b4a2c; --focus:#c97b28;
+  --font-display:'Baloo 2', ui-rounded, 'Segoe UI', sans-serif;
+  --font-body:'Nunito Sans', 'Segoe UI', sans-serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+html{ font-size:clamp(19px, 1.28vw, 34px); }   /* everything scales from here */
+body{
+  margin:0; overflow:hidden; color:var(--text); font-family:var(--font-body); user-select:none; font-size:1rem;
+  background:
+    radial-gradient(ellipse 90% 70% at 20% -10%, #fff6da 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 100% 100%, #ffe0a050 0%, transparent 60%),
+    repeating-linear-gradient(0deg,#00000007 0 1px,transparent 1px 34px),
+    repeating-linear-gradient(90deg,#00000007 0 1px,transparent 1px 34px),
+    linear-gradient(180deg,var(--paper),var(--paper-2));
+}
+img{max-width:100%;}
+button{font-family:inherit; cursor:pointer;}
+h1,h2,h3{font-family:var(--font-display); margin:0;}
+.eyebrow{font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim);}
+
+/* ---- top bar ---- */
+#topbar{position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:.6rem 1rem; z-index:50;}
+#topbar .brand{display:flex; align-items:center; gap:.5rem;}
+#topbar .mark{width:2.2rem;height:2.2rem;border-radius:.6rem;display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+  background:radial-gradient(circle at 35% 30%,var(--amber-glow),var(--amber-deep));}
+#topbar h1{font-size:1.25rem;color:var(--text);}
+#topbar h1 span{color:var(--amber-deep);}
+.icon-btn{width:2.4rem;height:2.4rem;border-radius:.6rem;border:none;background:#6b4a2c14;font-size:1.05rem;}
+.icon-btn:hover{background:#6b4a2c26;}
+
+/* ---- screens ---- */
+.screen{position:fixed; inset:0; display:none; padding:clamp(3.4rem,7vh,5.5rem) clamp(1rem,4vw,4rem) clamp(1rem,3vh,3rem); overflow-y:auto; overflow-x:hidden;}
+.screen.on{display:flex;}
+.btn{
+  font-family:var(--font-display); font-weight:700; font-size:1.05rem; color:#fff;
+  background:linear-gradient(180deg,var(--amber-glow),var(--amber-deep));
+  border:none; border-radius:.9rem; padding:.78em 1.6em; box-shadow:0 .4rem .9rem -.4rem #c9772e88;
+}
+.btn:hover{filter:brightness(1.04);}
+.btn:active{transform:translateY(1px);}
+.btn:disabled{opacity:.45; filter:grayscale(.3);}
+.btn.ghost{background:transparent; color:var(--text); border:1.5px solid #6b4a2c33; box-shadow:none;}
+.btn.big{font-size:1.3rem; padding:.8em 1.8em;}
+
+/* ---- den window (Bera stage) ---- */
+.den-window{
+  position:relative; width:min(56vh,44vw,30rem); aspect-ratio:1/1; border-radius:1.6rem; overflow:hidden; flex:0 0 auto;
+  background:radial-gradient(circle at 32% 26%,#fff2ce 0%,#fbd888 32%,#edb15c 62%,#c98c45 100%);
+  box-shadow:0 0 0 8px var(--frame),0 0 0 11px #fff6df70,0 0 0 12px #00000030,0 20px 44px -14px #4a2f1260;
+}
+.den-window .pillow{position:absolute; left:50%; bottom:5%; width:70%; height:16%; transform:translateX(-50%) scale(1,.5);
+  background:radial-gradient(ellipse at center,#ffffff33,transparent 72%); border-radius:50%; opacity:0; transition:opacity .5s;}
+.den-window[data-lying="1"] .pillow{opacity:1;}
+.den-window.shake{animation:shakeIt .5s;}
+@keyframes shakeIt{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px) rotate(-1deg)}60%{transform:translateX(7px) rotate(1deg)}}
+#bera-wrap{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;}
+#reactWrap{width:78%; height:78%; display:flex; align-items:center; justify-content:center;}
+#beraImg{width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 10px 14px #00000030); animation:breathe 4.4s ease-in-out infinite;}
+@keyframes breathe{0%,100%{transform:scale(1)}45%{transform:scale(1.02,1.035) rotate(.5deg)}70%{transform:scale(1.01)}}
+.react-settle{animation:settle .7s cubic-bezier(.34,1.7,.4,1);}
+@keyframes settle{0%{transform:scale(1)}30%{transform:scale(1.07,.91)}55%{transform:scale(.95,1.06)}100%{transform:scale(1)}}
+.react-stir{animation:stir 1.1s;}
+@keyframes stir{0%{transform:rotate(0)}22%{transform:rotate(9deg) translateY(-5%)}42%{transform:rotate(-5deg)}64%{transform:rotate(4deg)}100%{transform:rotate(0)}}
+.react-perk{animation:perk .75s cubic-bezier(.28,1.75,.38,1);}
+@keyframes perk{0%{transform:translateY(0) rotate(0)}40%{transform:translateY(-9%) rotate(-3deg) scale(1.04)}100%{transform:translateY(0)}}
+.react-flicker{animation:flick .9s;}
+@keyframes flick{0%{transform:rotate(0)}20%{transform:rotate(6deg)}40%{transform:rotate(-4deg)}60%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+.react-fizzle{animation:fizz .45s ease-out;}
+@keyframes fizz{0%{transform:rotate(0)}40%{transform:rotate(2deg) scale(1.01)}100%{transform:rotate(0)}}
+@media (prefers-reduced-motion:reduce){#beraImg{animation:none} .react-settle,.react-stir,.react-perk,.react-flicker,.react-fizzle{animation:none}}
+
+#burst{position:absolute; left:50%; top:16%; transform:translateX(-50%); display:flex; pointer-events:none; z-index:5;
+  font-family:var(--font-display); font-weight:800; color:#fff; text-shadow:0 2px 8px #7a460088; font-size:0; opacity:0; text-align:center; max-width:80%;}
+#burst.go{animation:callPop 1.4s ease-out;}
+@keyframes callPop{0%{font-size:0;opacity:0;transform:translate(-50%,10px)}25%{font-size:1.4rem;opacity:1;transform:translate(-50%,-6px)}80%{font-size:1.3rem;opacity:1}100%{font-size:1.3rem;opacity:0;transform:translate(-50%,-14px)}}
+
+/* ===================== TITLE ===================== */
+#scr-title{align-items:center; justify-content:center;}
+#scr-title .card{max-width:min(60rem,92vw); text-align:center; background:var(--card); border:1px solid var(--card-line); border-radius:1.6rem; padding:1.6rem 1.8rem 1.9rem; box-shadow:0 1.4rem 3rem -1.4rem #6b4a2c55;}
+#scr-title .hero{width:min(22rem,52vw); border-radius:1.1rem; margin:.2rem auto .8rem; display:block; box-shadow:0 .7rem 1.5rem -.7rem #6b4a2c66;}
+#scr-title h2{font-size:2.5rem; color:var(--amber-deep);}
+#scr-title p.lead{font-size:1.12rem; line-height:1.6; color:var(--text); max-width:40rem; margin:.7rem auto .4rem;}
+#scr-title p.by{font-size:.85rem; color:var(--text-dim); margin:.1rem 0 1.1rem;}
+
+/* ===================== SELECT ===================== */
+#scr-select{align-items:center; justify-content:center;}
+#scr-select .wrap{display:flex; gap:2.4rem; align-items:center; flex-wrap:wrap; justify-content:center; max-width:min(66rem,94vw);}
+#scr-select .lever{display:flex; gap:1rem; align-items:stretch;}
+#sel-track{position:relative; width:2.7rem; height:min(64vh,32rem); border-radius:1.6rem; background:linear-gradient(180deg,#0a1216,#152229);
+  box-shadow:inset 0 0 1.2rem #00000060; border:2px solid #2e4d5b;}
+.sel-notch{position:absolute; left:50%; transform:translate(-50%,-50%); width:1.6rem; height:.2rem; border-radius:.1rem; background:#ffffff2e;}
+#sel-handle{position:absolute; left:50%; transform:translate(-50%,-50%); width:3.6rem; height:2.2rem; border-radius:.8rem; border:none;
+  background:radial-gradient(120% 140% at 30% 20%,var(--amber-glow),var(--amber) 45%,var(--amber-deep));
+  color:#4a2c0c; font-family:var(--font-display); font-weight:800; font-size:1.15rem; box-shadow:0 .5rem .9rem -.35rem #00000070; cursor:grab; touch-action:none;}
+#sel-handle:active{cursor:grabbing;}
+#sel-handle:focus-visible{outline:3px solid var(--focus); outline-offset:3px;}
+#scr-select .lever .rail-caption{writing-mode:vertical-rl; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim); align-self:center;}
+#scr-select .info{background:var(--card); border:1px solid var(--card-line); border-radius:1.4rem; padding:1.6rem 1.8rem; width:min(30rem,86vw); text-align:center; box-shadow:0 1.2rem 2.6rem -1.2rem #6b4a2c55;}
+#sel-preview{width:10rem; height:10rem; object-fit:contain; margin:.1rem auto .2rem; display:block; filter:drop-shadow(0 .4rem .7rem #00000026);}
+#sel-preview.lying{transform:none;}
+#sel-emoji{font-size:1.6rem;}
+#sel-name{font-family:var(--font-display); font-weight:800; font-size:1.75rem; color:var(--amber-deep); margin:.1rem 0;}
+#sel-blurb{color:var(--text-dim); font-size:.95rem; min-height:2.6em;}
+#scr-select .actions{display:flex; gap:.7rem; justify-content:center; margin-top:.9rem; flex-wrap:wrap;}
+#sel-score{font-family:var(--font-mono); font-size:.8rem; color:var(--sage-ink); margin-top:.8rem;}
+#scr-select h2{font-size:1.9rem; text-align:center; color:var(--text); width:100%; margin-bottom:.2rem;}
+#scr-select .sub{width:100%; text-align:center; color:var(--text-dim); font-size:.95rem; margin-bottom:1.4rem;}
+
+/* ===================== OBSERVE ===================== */
+#scr-observe{flex-direction:column; align-items:center;}
+#obs-head{display:flex; gap:.8rem; align-items:baseline; margin-bottom:.4rem;}
+#obs-name{font-family:var(--font-display); font-weight:800; font-size:1.5rem; color:var(--amber-deep);}
+#obs-progress{font-family:var(--font-mono); font-size:.8rem; color:var(--text-dim);}
+#obs-instruction{max-width:min(58rem,94vw); text-align:center; font-size:.98rem; line-height:1.45; color:var(--text-dim); margin:0 0 1.1rem;
+  background:#fffdf4; border:1px solid var(--card-line); border-radius:.8rem; padding:.6em 1em;}
+#obs-instruction b{color:var(--amber-deep);}
+#obs-body{display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; justify-content:center; max-width:min(82rem,96vw); width:100%;}
+#obs-tools{display:flex; flex-direction:column; gap:.55rem; width:15.5rem; flex:0 0 auto;}
+.tool-btn{display:flex; align-items:center; gap:.6rem; text-align:left; padding:.7em .8em; border-radius:.8rem; border:1.5px solid #23424e;
+  background:linear-gradient(180deg,#233c47,#1b2f38); color:var(--cream); font-size:1rem; font-weight:600; position:relative;}
+.tool-btn .te{font-size:1.2rem;}
+.tool-btn .tl{flex:1; line-height:1.2;}
+.tool-btn .tc{opacity:0; color:var(--sage); font-weight:800;}
+.tool-btn.done{border-color:var(--sage-ink); background:linear-gradient(180deg,#22443a,#1b332c);}
+.tool-btn.done .tc{opacity:1;}
+.tool-btn:hover{filter:brightness(1.1);}
+#obs-stage{flex:0 0 auto;}
+#obs-right{flex:1 1 22rem; min-width:20rem; max-width:33rem; background:var(--card); border:1px solid var(--card-line); border-radius:1.3rem; padding:1.4rem 1.6rem; box-shadow:0 1rem 2.4rem -1.3rem #6b4a2c44;}
+#obs-q{font-family:var(--font-display); font-weight:700; font-size:1.4rem; line-height:1.3; color:var(--text); min-height:2.4em;}
+#obs-opts{display:flex; flex-direction:column; gap:.6rem; margin-top:1rem;}
+.opt-btn{text-align:left; padding:.75em 1em; border-radius:.8rem; border:2px solid var(--card-line); background:#fff; color:var(--text); font-size:1.08rem; line-height:1.35;}
+.opt-btn:hover:not(:disabled){border-color:var(--amber-deep);}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.chosen-ok{border-color:var(--sage-ink); background:#8ac4a824;}
+.opt-btn.chosen-no{border-color:var(--coral-deep); background:#ea6b4d22;}
+.obs-feedback{margin-top:1rem; font-size:1rem; line-height:1.4; min-height:1.2em; font-weight:700;}
+.obs-feedback.ok{color:var(--sage-ink);}
+.obs-feedback.no{color:var(--coral-deep);}
+#obs-actions{margin-top:1.5rem; display:flex; gap:.7rem; flex-wrap:wrap;}
+#btn-obs-quit{font-size:.95rem; padding:.6em 1.1em;}
+
+/* ===================== CHECKLIST ===================== */
+#scr-checklist{align-items:center; justify-content:center;}
+#scr-checklist .card{max-width:min(52rem,92vw); width:100%; background:var(--card); border:1px solid var(--card-line); border-radius:1.5rem; padding:1.6rem 1.9rem; box-shadow:0 1.3rem 2.8rem -1.3rem #6b4a2c55;}
+#scr-checklist .folder-tab{display:inline-block; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; background:#8ac4a81a; color:var(--sage-ink); border:1px solid #8ac4a83a; border-radius:.4rem; padding:.25em .7em; margin-bottom:.5rem;}
+#scr-checklist h2{font-size:2rem; color:var(--amber-deep);}
+#scr-checklist .top{display:flex; gap:1.1rem; align-items:center; margin:.6rem 0 .9rem;}
+#chk-pose{width:6.5rem; height:6.5rem; object-fit:contain; flex:0 0 auto; filter:drop-shadow(0 .4rem .5rem #00000022); background:radial-gradient(circle at 40% 35%,#fdeecb,#f6dca6); border-radius:1.1rem; padding:.35rem;}
+#scr-checklist .top p{margin:0; color:var(--text-dim); font-size:.98rem;}
+#chk-list{display:flex; flex-direction:column; gap:.45rem; margin-bottom:1.3rem;}
+.chk-row{display:flex; gap:.6rem; align-items:flex-start; padding:.6em .8em; border-radius:.7rem; background:#fff; border:1px solid var(--card-line); font-size:1rem; line-height:1.35;}
+.chk-row .ce{font-size:1.1rem;}
+.chk-row .ct{flex:1;}
+.chk-row .cm{font-weight:800; font-size:1.1rem;}
+.chk-row.ok{border-color:#8ac4a866;} .chk-row.ok .cm{color:var(--sage-ink);}
+.chk-row.no{border-color:#ea6b4d55;} .chk-row.no .cm{color:var(--coral-deep);}
+
+/* ===================== PLACE ===================== */
+#scr-place{flex-direction:column; align-items:center;}
+#scr-place h2{font-size:1.55rem; color:var(--text); text-align:center; margin-bottom:.1rem;}
+#scr-place .sub{color:var(--text-dim); font-size:.95rem; text-align:center; margin:.1rem 0 .6rem;}
+#place-body{display:flex; gap:1.2rem; align-items:flex-start; justify-content:center; flex-wrap:wrap; max-width:min(88rem,97vw); width:100%;}
+#place-refcard{background:var(--card); border:1px solid var(--card-line); border-radius:1.1rem; padding:.9rem 1rem; text-align:center; width:10.5rem; flex:0 0 auto;}
+#place-refcard .eyebrow{margin-bottom:.4rem; display:block;}
+#place-ref{width:8rem; height:8rem; object-fit:contain; margin:0 auto; display:block; background:radial-gradient(circle at 40% 35%,#fdeecb,#f6dca6); border-radius:.9rem; padding:.35rem;}
+#place-stage{flex:0 1 min(52rem, 60vw, 74vh); min-width:18rem;}
+#place-frame{position:relative; width:100%; aspect-ratio:1402/1122; border:.3rem solid var(--frame); border-radius:.9rem; overflow:hidden; background:#fff; touch-action:none;}
+#place-diagram{position:absolute; inset:0; width:100%; height:100%; object-fit:fill; pointer-events:none;}
+#glow-x,#glow-y{position:absolute; background:linear-gradient(90deg,#f2a93b,#ffd873); box-shadow:0 0 .8rem .2rem #ffc94a88; opacity:.85; pointer-events:none; border-radius:.2rem;}
+#glow-x{height:.5rem; transform:translateY(-50%);}
+#glow-y{width:.5rem; transform:translateX(-50%); background:linear-gradient(180deg,#ffd873,#f2a93b);}
+#place-bera{position:absolute; width:15%; transform:translate(-50%,-58%); cursor:grab; filter:drop-shadow(0 .4rem .6rem #00000033); touch-action:none; z-index:3;}
+#place-bera:active{cursor:grabbing;}
+#place-bera.landed{animation:land .4s cubic-bezier(.34,1.6,.4,1);}
+@keyframes land{0%{transform:translate(-50%,-58%) scale(1.14)}100%{transform:translate(-50%,-58%) scale(1)}}
+#place-hint{font-family:var(--font-mono); font-size:.78rem; color:var(--text-dim); text-align:center; margin-top:.5rem;}
+#place-hint.match{color:var(--sage-ink); font-weight:700;}
+.place-verdict{font-family:var(--font-display); font-weight:800; font-size:1.55rem; text-align:center; min-height:1.4em; margin:.8rem 0 .2rem;}
+.place-verdict.great{color:var(--sage-ink);} .place-verdict.ok{color:var(--amber-deep);} .place-verdict.far{color:var(--coral-deep);}
+#place-actions{display:flex; gap:.7rem; margin-top:.5rem; flex-wrap:wrap; justify-content:center;}
+
+/* ===================== EXPLAIN ===================== */
+#scr-explain{align-items:center; justify-content:center;}
+#scr-explain .card{max-width:min(52rem,92vw); width:100%; background:var(--card); border:1px solid var(--card-line); border-radius:1.5rem; padding:1.7rem 2rem; box-shadow:0 1.3rem 2.8rem -1.3rem #6b4a2c55; text-align:center;}
+#exp-pose{width:10rem; height:10rem; object-fit:contain; margin:0 auto .4rem; display:block; filter:drop-shadow(0 .5rem .7rem #00000026); background:radial-gradient(circle at 40% 35%,#fdeecb,#f6dca6); border-radius:1.2rem; padding:.5rem;}
+#exp-name{font-family:var(--font-display); font-weight:800; font-size:2.3rem; color:var(--amber-deep);}
+#exp-text{font-size:1.15rem; line-height:1.65; color:var(--text); margin:.8rem 0 .4rem; text-align:left;}
+#exp-text b{color:var(--amber-deep);}
+#exp-score{font-family:var(--font-mono); font-size:.82rem; color:var(--sage-ink); margin:.7rem 0 1.1rem;}
+
+/* ===================== POPUP ===================== */
+.popup-back{position:fixed; inset:0; background:#3a2a1866; backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center; z-index:100;}
+.popup-back.on{display:flex;}
+.popup-card{background:var(--card); border:1px solid var(--card-line); border-radius:1.4rem; padding:1.6rem 2rem 1.8rem; max-width:min(28rem,90vw); text-align:center; box-shadow:0 1.5rem 3.5rem -1rem #0009;}
+#popup-emo{font-size:2.6rem; line-height:1;}
+#popup-title{font-family:var(--font-display); font-weight:800; font-size:1.5rem; color:var(--coral-deep); margin:.3rem 0 .2rem;}
+#popup-msg{font-size:1.08rem; line-height:1.5; color:var(--text); margin:.4rem 0 1.2rem;}
+
+@media (max-width:52rem){
+  #obs-tools{flex-direction:row; flex-wrap:wrap; width:100%;} .tool-btn{flex:1 1 45%;}
+}
+</style>
+</head>
+<body data-screen="scr-title">
+
+<div id="topbar">
+  <div class="brand"><div class="mark">🐻</div><h1>Help <span>Bera!</span></h1></div>
+  <button class="icon-btn" id="btn-mute" title="Sound on / off">🔊</button>
+</div>
+
+<!-- ============ TITLE ============ -->
+<section class="screen" id="scr-title">
+  <div class="card">
+    <img class="hero" src="assets/sprites/bera/Doctor_Detective.png" alt="Doctor Detective and Bera">
+    <span class="eyebrow">NIMHANS Brain Museum · Levels of Consciousness</span>
+    <h2>Help Bera!</h2>
+    <p class="lead">Hey! You’re <b>Doctor Detective DD</b> today. Your job is to find out how Bera is feeling.
+      It’s simple — watch Bera’s face and how she answers, tick what you see, then place her on the map.</p>
+    <p class="by">Ready, Detective?</p>
+    <button class="btn big" id="btn-start">🔍  Start investigating</button>
+  </div>
+</section>
+
+<!-- ============ SELECT ============ -->
+<section class="screen" id="scr-select">
+  <div>
+    <h2>Pick a case to investigate</h2>
+    <div class="sub">Pull the lever to choose how Bera is today — or press “Surprise me”.</div>
+    <div class="wrap">
+      <div class="lever">
+        <div class="rail-caption">Bera today</div>
+        <div id="sel-track"><button id="sel-handle" tabindex="0" aria-label="Drag to choose a case">1</button></div>
+      </div>
+      <div class="info">
+        <img id="sel-preview" src="assets/sprites/bera/eyes_open.png" alt="">
+        <div id="sel-emoji">😃</div>
+        <div id="sel-name">Fully Alert</div>
+        <div id="sel-blurb">—</div>
+        <div class="actions">
+          <button class="btn ghost" id="sel-random">🎲 Surprise me</button>
+          <button class="btn" id="sel-go">Investigate →</button>
+        </div>
+        <div id="sel-score"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBSERVE ============ -->
+<section class="screen" id="scr-observe">
+  <div id="obs-head">
+    <span id="obs-emoji">😃</span>
+    <span id="obs-name">Case</span>
+    <span id="obs-progress">0 / 0 observed</span>
+  </div>
+  <div id="obs-instruction">Do <b>every</b> test. After each one, tick the choice that matches what Bera did — you must get it right to move on.</div>
+  <div id="obs-body">
+    <div id="obs-tools"></div>
+    <div id="obs-stage">
+      <div class="den-window" id="den" data-lying="0">
+        <div class="pillow"></div>
+        <div id="bera-wrap"><div id="reactWrap"><img id="beraImg" src="assets/sprites/bera/eyes_open.png" alt="Bera"></div></div>
+        <div id="burst"></div>
+      </div>
+    </div>
+    <div id="obs-right">
+      <div id="obs-q">Pick a tool on the left to test Bera.</div>
+      <div id="obs-opts"></div>
+      <div class="obs-feedback" id="obs-feedback"></div>
+      <div id="obs-actions">
+        <button class="btn" id="btn-obs-done" style="display:none;">Review my notes →</button>
+        <button class="btn ghost" id="btn-obs-quit">← Different case</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section class="screen" id="scr-checklist">
+  <div class="card">
+    <span class="folder-tab">🗂 Detective’s notes</span>
+    <h2 id="chk-name">—</h2>
+    <div class="top">
+      <img id="chk-pose" src="" alt="">
+      <p>This is how Bera looked at the start. Now place her on the map where this state belongs.</p>
+    </div>
+    <div id="chk-list"></div>
+    <button class="btn big" id="btn-chk-next">Place Bera on the map →</button>
+  </div>
+</section>
+
+<!-- ============ PLACE ============ -->
+<section class="screen" id="scr-place">
+  <h2>Where does this state belong?</h2>
+  <div class="sub">Drag Bera on the map. Match her expression to your note card, then submit.</div>
+  <div id="place-body">
+    <div id="place-refcard">
+      <span class="eyebrow">Match this</span>
+      <img id="place-ref" src="" alt="">
+    </div>
+    <div id="place-stage">
+      <div id="place-frame">
+        <img id="place-diagram" src="assets/background.png" alt="Awareness vs Wakefulness map">
+        <div id="glow-x"></div><div id="glow-y"></div>
+        <img id="place-bera" src="assets/sprites/bera/eyes_open.png" alt="Bera — drag me">
+      </div>
+      <div id="place-hint">drag Bera onto the map</div>
+      <div class="place-verdict" id="place-verdict"></div>
+      <div id="place-actions">
+        <button class="btn big" id="btn-place-submit">Submit position</button>
+        <button class="btn big" id="btn-place-next" style="display:none;">Hear from Bera →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPLAIN ============ -->
+<section class="screen" id="scr-explain">
+  <div class="card">
+    <img id="exp-pose" src="" alt="">
+    <div><span id="exp-emoji">😃</span> <span class="eyebrow">Bera explains</span></div>
+    <h2 id="exp-name">—</h2>
+    <div id="exp-text">—</div>
+    <div id="exp-score"></div>
+    <button class="btn big" id="btn-exp-again">🔍 Investigate another case</button>
+  </div>
+</section>
+
+<!-- ============ POPUP ============ -->
+<div id="popup" class="popup-back">
+  <div class="popup-card">
+    <div id="popup-emo">🔍</div>
+    <h3 id="popup-title">Observe Bera again</h3>
+    <p id="popup-msg"></p>
+    <button class="btn big" id="popup-ok">Watch again</button>
+  </div>
+</div>
+
+<script src="game.js?v=8"></script>
+</body>
+</html>
