@@ -113,7 +113,7 @@ var STATES = {
         opts:[['pulls her paw away',1],['does not feel it',0],['grabs your hand',0]] },
       { tool:'clap', pose:'touch_nose', say:'Clap?… Why?', react:'react-flicker', q:'Asked to clap, she…',
         opts:[['gets muddled and does it wrong',1],['claps correctly',0],['ignores it',0]] },
-      { tool:'raisehand', pose:'raise_right_hand', say:'This one?', react:'react-flicker', q:'Asked to raise her right hand, she…',
+      { tool:'raisehand', pose:'raising_left_hand_in_confused_state', say:'This one?', react:'react-flicker', q:'Asked to raise her right hand, she…',
         opts:[['raises the wrong hand',1],['raises the right hand',0],['does not move',0]] },
       { tool:'name', pose:'confused', say:'Bera… I think?', react:'react-flicker', q:'Asked her name, she…',
         opts:[['is not sure of her name',1],['says it clearly',0],['says nothing',0]] },
