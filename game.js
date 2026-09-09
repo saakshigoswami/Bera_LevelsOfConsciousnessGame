@@ -406,7 +406,6 @@ function initSelect(){
     var s=STATES[STATE_ORDER[selIndex]];
     handle.style.top=(selIndex/(STATE_ORDER.length-1)*100)+'%';
     handle.textContent=(selIndex+1);
-    $('sel-name').textContent=s.name;
     $('sel-emoji').textContent=s.emoji;
     $('sel-blurb').textContent=s.blurb;
     $('sel-preview').src=SPR+s.idle+'.png';
